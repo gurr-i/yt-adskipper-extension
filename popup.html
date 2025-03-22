@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>⚡ YouTube Ad Skipper 🪸</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⚡ YouTube Ad Skipper 🪸</h1>
+    </div>
+    <div class="content">
+      <div class="status-container">
+        <span>Status:</span>
+        <span id="status-text" class="status-text">Active</span>
+      </div>
+      <div class="toggle-container">
+        <label class="toggle">
+          <input type="checkbox" id="toggle-button" checked>
+          <span class="slider round"></span>
+        </label>
+        <span>Enable Ad Skipping</span>
+      </div>
+      <div class="toggle-container">
+        <label class="toggle">
+          <input type="checkbox" id="dark-mode-toggle">
+          <span class="slider round"></span>
+        </label>
+        <span>Enable Dark Mode</span>
+      </div>
+      <div class="statistics">
+        <p>Ads skipped this session: <span id="ads-skipped">0</span></p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>YouTube Ad Skipper v1.0</p>
+      <p>Made with love 💖 by @Gurveer</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
