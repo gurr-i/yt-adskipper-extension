@@ -1,4 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Rate limiting variables
+  const WRITE_OPERATION_LIMIT = 120; // Max writes per minute
+  const WRITE_INTERVAL = 60000 / WRITE_OPERATION_LIMIT; // Minimum interval between writes
+  let lastWriteTime = 0;
+  let writeQueue = [];
+
+  function processWriteQueue() {
+    if (writeQueue.length > 0 && Date.now() - lastWriteTime >= WRITE_INTERVAL) {
+      const {key, value, callback} = writeQueue.shift();
+      chrome.storage.sync.set({[key]: value}, function() {
+        lastWriteTime = Date.now();
+        if (callback) callback();
+        processWriteQueue();
+      });
+    } else if (writeQueue.length > 0) {
+      setTimeout(processWriteQueue, WRITE_INTERVAL - (Date.now() - lastWriteTime));
+    }
+  }
+
+  function rateLimitedSet(key, value, callback) {
+    writeQueue.push({key, value, callback});
+    processWriteQueue();
+  }
+
   const toggleButton = document.getElementById('toggle-button');
   const darkModeToggle = document.getElementById('dark-mode-toggle');
   const statusText = document.getElementById('status-text');
