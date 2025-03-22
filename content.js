@@ -235,7 +235,11 @@ function checkForAds() {
 // Increment ads skipped counter
 function incrementAdsSkipped() {
   adsSkipped++;
-  chrome.storage.sync.set({ adsSkipped: adsSkipped });
+  if (chrome.storage && chrome.storage.sync) {
+    chrome.storage.sync.set({ adsSkipped: adsSkipped });
+  } else {
+    console.error('Chrome storage sync API is not available');
+  }
 
   // Notify user of ad skip
   chrome.notifications.create({
